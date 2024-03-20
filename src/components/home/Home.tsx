@@ -14,7 +14,7 @@ const Home = () => {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        const URL = `http://api.nasa.gov/neo/rest/v1/neo/browse?page=${nextPage}&size=20&api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`
+        const URL = `https://api.nasa.gov/neo/rest/v1/neo/browse?page=${nextPage}&size=20&api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`
         const get = async () => {
             const data = await Getter(URL)
             if (data) {

@@ -8,7 +8,7 @@ const AsteroideId = () => {
 
     useEffect(() => {
         const idGet = async () => {
-            const URL = `http://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`
+            const URL = `https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`
             const data = await Getter(URL)
             setAsteroid(data)
         }
