@@ -1,10 +1,15 @@
-import Home from "./components/Home"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Home from "./components/home/Home"
+import AsteroideId from "./components/AsteroideId/Asteroideid"
 
 function App() {
   return (
-    <>
-      <Home />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/Asteroide/:id" element={<AsteroideId />} />
+      </Routes>
+    </Router>
   )
 }
 
