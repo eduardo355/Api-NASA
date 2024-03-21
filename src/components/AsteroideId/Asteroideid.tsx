@@ -2,38 +2,84 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Getter from "../Getter"
 import { getNeo } from "../types"
+import Loader from "../Loader/Loader"
+
 const AsteroideId = () => {
     const { id } = useParams()
     const [asteroid, setAsteroid] = useState<getNeo | null>(null)
+    const [loader, setLoader] = useState(false)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
+        setLoader(true)
         const idGet = async () => {
             const URL = `https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`
             const data = await Getter(URL)
-            setAsteroid(data)
+            if (data) {
+                setAsteroid(data)
+                setLoader(false)
+            } else {
+                setError(true)
+            }
         }
         idGet()
     }, [])
+    console.log(asteroid);
 
-    if(!asteroid) {
-        return
+    if(loader) {
+        return <Loader />
     }
     return (
         <div
-            className={`group flex flex-col justify-start items-start gap-2 w-80 h-auto duration-500 relative rounded-lg p-4 bg-gradient-to-r hover:shadow-xl shadow-gray-800`}
+            className={"flex flex-col p-4 items-center"}
         >
-            <div className=" flex flex-col h-52">
-                <h2 className="text-2xl font-bold mb-2 text-balance text-gray-100">{asteroid.name}</h2>
-                <span className="text-gray-400"><b className="text-white">Designacion:</b> {asteroid.designation}</span>
-                <span className="text-gray-400"><b className="text-white">Magnitud absoluta:</b> {asteroid.absolute_magnitude_h}</span>
-                <span className="text-white text-xl"><b>Diametro:</b></span>
-                <div className=" flex flex-col">
-                    <span className="text-gray-400"><b className="text-white">Maximo:</b> {asteroid.estimated_diameter.kilometers.estimated_diameter_max}</span>
-                    <span className="text-gray-400"><b className="text-white">Minimo:</b> {asteroid.estimated_diameter.kilometers.estimated_diameter_min}</span>
+        <div className="flex w-full">
+            <small className="text-gray-500">Inicio / Asteroide</small>
+        </div>
+        {asteroid &&     
+            <div className=" flex flex-row gap-10 max-sm:flex-col max-sm:gap-0 max-sm:w-full">
+                <div className="flex flex-col">
+                    <h1 className="text-4xl font-bold mb-2 text-balance">{asteroid.name}</h1>
+                    <span ><b >Designacion:</b> {asteroid.designation}</span>
+                    <span ><b >Magnitud absoluta:</b> {asteroid.absolute_magnitude_h}</span>
+                    <span><b>Potencialmente peligroso:</b> {asteroid.is_potentially_hazardous_asteroid ? 'Si' : 'No'}</span>
+                    <span className=" text-2xl font-bold">Diametro:</span>
+                    <div className=" flex flex-col">
+                        <span ><b >Maximo:</b> {asteroid.estimated_diameter.kilometers.estimated_diameter_max}</span>
+                        <span ><b >Minimo:</b> {asteroid.estimated_diameter.kilometers.estimated_diameter_min}</span>
+                    </div>
+                    <span className=" text-2xl font-bold">Clase de orbita:</span>
+                    <div className=" flex flex-col">
+                        <span ><b >Tipo de clase de órbita:</b> {asteroid.orbital_data.orbit_class.orbit_class_type}</span>
+                        <p className="w-[34rem] max-sm:w-auto "><b >Descripción de la clase de órbita:</b> {asteroid.orbital_data.orbit_class.orbit_class_description}</p>
+                        <span className="w-[34rem] max-sm:w-auto"><b >Rango de la clase de órbita:</b> {asteroid.orbital_data.orbit_class.orbit_class_range}</span>
+                    </div>
                 </div>
-                <span className="text-gray-400"><b className="text-white">Potencialmente peligroso:</b> {asteroid.is_potentially_hazardous_asteroid ? 'Si' : 'No'}</span>
-                <img className="absolute left-52 top-20 opacity-40" src="./asteroide.png" alt="" width={90} />
-            </div>
+                <div className="flex flex-col">
+                    <span className=" text-2xl font-bold">Detalles de orbitacion: </span>
+                    <dl>
+                        <dt><b>Fecha de determinación de la órbita:</b></dt>
+                        <dd>{asteroid.orbital_data.orbit_determination_date}</dd>
+
+                        <dt><b>Primera fecha de observación:</b></dt>
+                        <dd>{asteroid.orbital_data.first_observation_date}</dd>
+
+                        <dt><b>Última fecha de observación:</b></dt>
+                        <dd>{asteroid.orbital_data.last_observation_date}</dd>
+                        <dt><b>Arco de datos en días:</b></dt>
+                        <dd>{asteroid.orbital_data.data_arc_in_days.toLocaleString('en-US')}</dd>
+                        
+                        <dt><b>Observaciones utilizadas:</b></dt>
+                        <dd>{asteroid.orbital_data.observations_used.toLocaleString('en-US')}</dd>
+
+                        <dt><b>Incertidumbre de la órbita:</b></dt>
+                        <dd>{asteroid.orbital_data.orbit_uncertainty}</dd>
+
+                        <dt><b>Intersección mínima de órbita:</b></dt>
+                        <dd>{asteroid.orbital_data.minimum_orbit_intersection}</dd>
+                    </dl>
+                </div>
+            </div>}
         </div>
     )
 }

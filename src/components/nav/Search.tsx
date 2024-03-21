@@ -18,13 +18,13 @@ const Search = () => {
         </div>
         <input 
         type="text" 
-        className="w-full max-w-[160px] bg-gray-200 pl-2 text-base font-semibold outline-0" 
+        className="w-full max-w-[160px] max-sm:max-w-[220px] bg-gray-200 pl-2 text-base font-semibold outline-0" 
         placeholder="" 
         id="" 
         value={SearchInput}
         onChange={handleSearch}
         />
-        <input type="button" disabled value="Buscar" className="bg-blue-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-blue-800 transition-colors" />
+        <input type="button" disabled value="Buscar" className="bg-blue-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold " />
         </div>
     </div>
     )

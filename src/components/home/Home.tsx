@@ -4,6 +4,7 @@ import Getter from "../Getter"
 import { SearchGlobal } from "../Global"
 import Nav from "../nav/nav"
 import { useNavigate } from "react-router-dom"
+import Loader from "../Loader/Loader"
 
 
 const Home = () => {
@@ -12,19 +13,21 @@ const Home = () => {
     const [nextPage, setNextPage] = useState(0)
     const { SearchInput } = SearchGlobal()
     const [error, setError] = useState(false)
+    const [loader, setLoader] = useState(false)
 
     useEffect(() => {
+        setLoader(true)
         const URL = `https://api.nasa.gov/neo/rest/v1/neo/browse?page=${nextPage}&size=20&api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`
         const get = async () => {
             const data = await Getter(URL)
             if (data) {
                 setApo(data.near_earth_objects)
+                setLoader(false)
             } else {
                 setError(true)
             }
         }
         get()
-
     }, [nextPage])
 
     if(error) {
@@ -33,37 +36,33 @@ const Home = () => {
 
     const handleNext = () => {
         setNextPage(nextPage + 1)
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        })
     }
 
     const handlePrev = () => {
         setNextPage(nextPage - 1)
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        })
     }
-
-    const listFilter = SearchInput ? apo.filter(name => name.name.includes(SearchInput)) : apo
+    const listFilter = SearchInput 
+    ? apo.filter(name => name.name.includes(SearchInput)) 
+    : apo
 
     const typeColor = (typeAsteroid: boolean) => {
         return typeAsteroid ?  'from-red-500 to-red-900' :  'from-indigo-500 to-indigo-900'
     }
     return (
         <div>
-            <Nav />
+            <Nav /> 
+            {loader &&
+                <Loader />
+            }
             <div className=" flex flex-col">
             <div className=" flex gap-5 mt-4 flex-wrap justify-center">
-                    {listFilter.length > 0 ? listFilter.map((neo: typesGetNeo) => {
+                    {listFilter.length > 0 && !loader ? listFilter.map((neo: typesGetNeo) => {
                         const typeAsteroid = neo.is_potentially_hazardous_asteroid
                         const gradientColor = typeColor(typeAsteroid)
                         return (
                             <div
                                 key={neo.id}
-                                className={`group flex flex-col justify-start items-start gap-2 w-80 h-auto duration-500 relative rounded-lg p-4 bg-gradient-to-r ${gradientColor} hover:shadow-xl shadow-gray-800`}
+                                className={`group flex flex-col justify-start items-start gap-2 w-80 max-sm:w-96 h-auto duration-500 relative rounded-lg p-4 bg-gradient-to-r ${gradientColor}`}
                             >
                                 <div className=" flex flex-col h-52">
                                     <h2 className="text-2xl font-bold mb-2 text-balance text-gray-100">{neo.name}</h2>
@@ -85,16 +84,16 @@ const Home = () => {
                                 </button>
                             </div>
                         )
-                    }) : <span>No se encontraron resultados</span>}
+                    }) : <span className="text-2xl">Buscando Asteroides...☄️</span>}
                 </div>
                 <div className="flex justify-center items-center gap-10 mt-4 mb-4">
-                    {nextPage > 0 && listFilter.length > 0  &&
+                    {!SearchInput && nextPage > 0 && listFilter.length > 0  && !loader  &&
                         <button onClick={handlePrev} className="bg-gradient-to-r from-indigo-500 to-indigo-900 text-neutral-400 border border-indigo-300 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group">
                             <span className="bg-indigo-400 shadow-neutral-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
                             Pagina anterior
                         </button>
                     }
-                    {!SearchInput && <button onClick={handleNext} className="bg-gradient-to-r from-indigo-500 to-indigo-900 text-neutral-400 border border-indigo-300 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group">
+                    {!SearchInput && !loader && <button onClick={handleNext} className="bg-gradient-to-r from-indigo-500 to-indigo-900 text-neutral-400 border border-indigo-300 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group">
                         <span className="bg-indigo-400 shadow-neutral-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
                         Siguiente pagina
                     </button>}
