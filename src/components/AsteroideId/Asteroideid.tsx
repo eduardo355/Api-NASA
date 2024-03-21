@@ -25,7 +25,9 @@ const AsteroideId = () => {
         idGet()
     }, [])
     console.log(asteroid);
-
+    if(error) {
+        return
+    } 
     if(loader) {
         return <Loader />
     }
