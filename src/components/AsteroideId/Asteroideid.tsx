@@ -23,7 +23,7 @@ const AsteroideId = () => {
             }
         }
         idGet()
-    }, [])
+    }, [id])
     console.log(asteroid);
     if(error) {
         return
