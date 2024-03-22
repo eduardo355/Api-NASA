@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Home from "./components/home/Home"
 import AsteroideId from "./components/AsteroideId/Asteroideid"
+import NoFound from "./components/NoFound/NoFound"
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/Asteroide/:id" element={<AsteroideId />} />
+        <Route element={<NoFound />} />
       </Routes>
     </Router>
   )
