@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/Asteroide/:id" element={<AsteroideId />} />
-        <Route element={<NoFound />} />
+        <Route path="*" element={<NoFound />} />
       </Routes>
     </Router>
   )
