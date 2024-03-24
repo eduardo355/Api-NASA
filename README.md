@@ -26,10 +26,10 @@ npm install
 
 Este proyecto incluye componentes React que interactúan con la API de la NASA para mostrar diferentes tipos de datos relacionados con el espacio:
 
-- APOD: Muestra la "Imagen del Día" (APOD) de la NASA junto con información sobre ella.
-- MarsRoverPhotos: Muestra imágenes recientes tomadas por los rovers en Marte.
+- APOD: Muestra la "Imagen del Día" (APOD) de la NASA junto con información sobre ella. (PROXIMAMENTE)
+- MarsRoverPhotos: Muestra imágenes recientes tomadas por los rovers en Marte. (PROXIMAMENTE)
 - NearEarthObjects: Muestra información sobre asteroides cercanos a la Tierra.
-- ISSLocation: Muestra la ubicación actual de la Estación Espacial Internacional (ISS).
+- ISSLocation: Muestra la ubicación actual de la Estación Espacial Internacional (ISS). (PROXIMAMENTE)
 
 - Puedes ejecutar la aplicación en modo de desarrollo utilizando el siguiente comando:
 ```bash
