@@ -5,6 +5,7 @@ import {
     close_approach_data,
     orbital_data,
 } from "./TypesAsteroide";
+import Getter from "../Getter";
 import Orbitaciones from "./Orbitaciones";
 import Loader from "../Loader/Loader";
 import Proxim from "./Proxim";
@@ -22,11 +23,8 @@ const AsteroideId: React.FC = () => {
         setLoader(true);
         try {
             const URL = `https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`;
-            const response = await fetch(URL);
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data: near_earth_objects = await response.json();
+            const response = await Getter(URL)
+            const data: near_earth_objects = response
             setAprox(data.close_approach_data);
             setOrbitaciones(data.orbital_data);
             setAsteroid(data);

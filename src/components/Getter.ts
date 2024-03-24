@@ -1,7 +1,5 @@
-import { data } from "./home/TypesHome"
 
-
-const Getter = async (URL: string): Promise<data | null> => {
+const Getter = async (URL: string) => {
     return await fetch(URL)
     .then(response => {
         if (response.ok) {
