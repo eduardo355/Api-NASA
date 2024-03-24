@@ -1,4 +1,4 @@
-import { close_approach_data } from "../types"
+import { close_approach_data } from "./TypesAsteroide"
 
 
 const Proxim: React.FC<{aprox : close_approach_data[] | null}> = ({ aprox }) => {

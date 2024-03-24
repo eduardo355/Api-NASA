@@ -1,8 +1,7 @@
-import { getNeo } from "./types"
+import { data } from "./home/TypesHome"
 
 
-
-const Getter = async (URL: string): Promise<getNeo | null> => {
+const Getter = async (URL: string): Promise<data | null> => {
     return await fetch(URL)
     .then(response => {
         if (response.ok) {
