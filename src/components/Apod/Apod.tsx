@@ -22,9 +22,6 @@ const Apod = () => {
         getApod()
     },[])
 
-    if(!apod) {
-        return
-    }
     return (
         <div className="flex flex-col p-4">
         <div className="flex">
@@ -32,7 +29,7 @@ const Apod = () => {
         </div>
         {loader && <Loader />}
         <div className=" flex items-center justify-center">
-            {!loader ?
+            {!loader && apod ?
                 <div className=" flex flex-col justify-center w-2/4 max-md:max-lg:w-[70%] max-sm:w-full ">
                     <h1 className="text-3xl font-bold max-sm:text-2xl max-md:text-2xl max-lg:text-2xl">{apod.title}</h1>
                     <img src={apod.hdurl} alt={apod.title} className="object-cover aspect-video" />

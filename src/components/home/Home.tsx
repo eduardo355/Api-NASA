@@ -21,7 +21,7 @@ const Home = () => {
             const URL = `https://api.nasa.gov/neo/rest/v1/neo/browse?page=${nextPage}&size=20&api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`;
             const response = await Getter(URL);
             if (response) {
-            const data: data = response;
+            const data: data = response
             setApo(data.near_earth_objects);
             setLoader(false);
             } else {
@@ -65,7 +65,7 @@ const Home = () => {
         {loader && <Loader />}
         <div className=" flex flex-col">
             <div className=" flex gap-5 mt-4 flex-wrap justify-center">
-            {listFilter.length > 0 && !loader ? (
+            {listFilter.length > 0 && !loader ? 
                 listFilter.map((neo: near_earth_objects) => {
                 const typeAsteroid = neo.is_potentially_hazardous_asteroid;
                 const gradientColor = typeColor(typeAsteroid);
@@ -129,9 +129,9 @@ const Home = () => {
                     </div>
                 );
                 })
-            ) : (
+            : 
                 <span className="text-2xl">Buscando Asteroides...☄️</span>
-            )}
+            }
             </div>
             <div className="flex justify-center items-center gap-10 mt-4 mb-4">
             {!SearchInput && nextPage > 0 && listFilter.length > 0 && !loader && (
