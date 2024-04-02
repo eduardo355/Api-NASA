@@ -4,15 +4,16 @@ import { Photos } from "./TypesMarte";
 import Loader from "../Loader/Loader";
 import Getter from "../Getter";
 import Filter from "./Filter";
-import { SearchGlobal } from "../Global";
+import { SearchMarteGlobal } from "../Global";
+import CardMarte from "./CardMarte";
 
 const Marte = () => {
   const navegacion = useNavigate();
   const location = useLocation();
-  const { SearchInput, reset } = SearchGlobal()
+  const { SearchMarte, reset } = SearchMarteGlobal()
   const [marte, setMarte] = useState<Photos[] | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
-  const [error, estError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [cargo, setCargo] = useState(false);
 
@@ -24,7 +25,7 @@ const Marte = () => {
   }, [location.search]);
 
   useEffect(() => {
-    if (cargo) {
+    if (cargo && !SearchMarte) {
       const getMarte = async () => {
         setLoader(true);
         try {
@@ -35,37 +36,36 @@ const Marte = () => {
             setMarte(data.photos);
             setLoader(false);
           } else {
-            estError(true);
+            setError(true);
           }
         } catch (error) {
-          estError(true);
+          setError(true);
         }
       };
       getMarte();
     }
-  }, [page, reset, cargo]);
+  }, [page, reset, cargo, SearchMarte]);
 
  useEffect(() => {
-    if (SearchInput) {
+    if (SearchMarte) {
       setLoader(true);
       try {
         const getMarte = async () => {
-          const response = await Getter(SearchInput);
+          const response = await Getter(SearchMarte);
           if (response) {
             const data = response;
-            console.log(data);
             setMarte(data.photos);
             setLoader(false);
           } else {
-            estError(true);
+            setError(true);
           }
         };
         getMarte();
       } catch (error) {
-        estError(true);
+        setError(true);
       }
     }
-  }, [SearchInput]);
+  }, [SearchMarte]);
 
   if (error) {
     return;
@@ -97,21 +97,7 @@ const Marte = () => {
           </div>
         ) : marte && marte?.length > 0 ? (
           marte.map((photos: Photos) => (
-            <div
-              key={photos.id}
-              className=" flex flex-col w-1/3 max-sm:w-full "
-            >
-              <h1>Rover {photos.rover.name}</h1>
-              <img
-                src={photos.img_src}
-                alt={photos.img_src}
-                className=" aspect-video"
-              />
-              <small>Fecha: {photos.earth_date}</small>
-              <span>Camara: {photos.camera.full_name}</span>
-              <span>Estatus: {photos.rover.status}</span>
-              <span>Total de fotos: {photos.rover.total_photos}</span>
-            </div>
+            <CardMarte photos={photos} />
           ))
         ) : (
           <span className="text-2xl text-center">
