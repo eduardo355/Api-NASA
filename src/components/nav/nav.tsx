@@ -6,8 +6,8 @@ const Nav = () => {
     return (
         <div className="flex items-center justify-between p-5 max-sm:flex-col max-md:flex-col">
             <div className="flex items-center">
-            <h1 className="text-4xl font-bold">NASA - API</h1>
-            <img src="./nasa.png" className="max-sm:w-[50px] w-[96px]" alt="" />
+                <img src="./nasa.png" className="max-sm:w-[50px] w-[60px]" alt="" />
+                <h1 className="text-4xl font-bold">NASA - API</h1>
             </div>
             <div className=" flex items-center justify-center gap-4 max-sm:flex-col">
                 <button onClick={() => navegacion('/Marte')} className="relative overflow-hidden transition">
