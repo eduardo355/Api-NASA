@@ -31,7 +31,6 @@ const AsteroideId: React.FC = () => {
             setLoader(false);
         } catch (error) {
             setError(true);
-            console.error("Error fetching data:", error);
             setLoader(false);
         }
         };

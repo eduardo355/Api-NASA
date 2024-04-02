@@ -21,11 +21,11 @@ const Home = () => {
             const URL = `https://api.nasa.gov/neo/rest/v1/neo/browse?page=${nextPage}&size=20&api_key=xO15lhanHARD6LlOCuvcLDbWgKt0cmXLr3nTaoKR`;
             const response = await Getter(URL);
             if (response) {
-            const data: data = response
-            setApo(data.near_earth_objects);
-            setLoader(false);
+                const data: data = response
+                setApo(data.near_earth_objects);
+                setLoader(false);
             } else {
-            setError(true);
+                setError(true);
             }
         } catch (error) {
             setError(true);

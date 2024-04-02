@@ -14,7 +14,6 @@ const Apod = () => {
             fetch(URL)
             .then(response => response.json())
             .then((data) => {
-                console.log(data);
                 setApod(data)
                 setLoader(false)
             })
